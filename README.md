@@ -7,12 +7,19 @@ description: Open an in-app browser window.
 
 - 2024年12月14日
   
-  open接口的options中添加useragent参数，使用如下：
-  
-  ```js
-  //由于useragent内容特殊性做转义处理
-  `useragent=${encodeURIComponent(getUa())}`
-  ```
+  - open接口的options中添加useragent参数，使用如下：
+    
+    ```js
+    //由于useragent内容特殊性做转义处理
+    `useragent=${encodeURIComponent(getUa())}`
+    ```
+
+  - executeScript返回值无法超过10240的问题
+    
+    是由于onJsPrompt这个回调的message参数有限制导致，因此需要改为用evaluateJavascript。
+
+    修改摘自：
+      - https://github.com/apache/cordova-plugin-inappbrowser/pull/395
 
 
 
