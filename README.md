@@ -2,6 +2,20 @@
 title: Inappbrowser
 description: Open an in-app browser window.
 ---
+
+# Change List for my fork
+
+- 2024年12月14日
+  
+  open接口的options中添加useragent参数，使用如下：
+  
+  ```js
+  //由于useragent内容特殊性做转义处理
+  `useragent=${encodeURIComponent(getUa())}`
+  ```
+
+
+
 <!--
 # license: Licensed to the Apache Software Foundation (ASF) under one
 #         or more contributor license agreements.  See the NOTICE file
