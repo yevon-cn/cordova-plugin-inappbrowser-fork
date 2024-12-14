@@ -18,6 +18,8 @@
 */
 package org.apache.cordova.inappbrowser;
 
+import java.io.UnsupportedEncodingException;  
+import java.net.URLDecoder;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -118,10 +120,11 @@ public class InAppBrowser extends CordovaPlugin {
     private static final String FOOTER_COLOR = "footercolor";
     private static final String BEFORELOAD = "beforeload";
     private static final String FULLSCREEN = "fullscreen";
+    private static final String USERAGENT = "useragent";
 
     private static final int TOOLBAR_HEIGHT = 48;
 
-    private static final List customizableOptions = Arrays.asList(CLOSE_BUTTON_CAPTION, TOOLBAR_COLOR, NAVIGATION_COLOR, CLOSE_BUTTON_COLOR, FOOTER_COLOR);
+    private static final List customizableOptions = Arrays.asList(CLOSE_BUTTON_CAPTION, TOOLBAR_COLOR, NAVIGATION_COLOR, CLOSE_BUTTON_COLOR, FOOTER_COLOR, USERAGENT);
 
     private InAppBrowserDialog dialog;
     private WebView inAppWebView;
@@ -999,6 +1002,13 @@ public class InAppBrowser extends CordovaPlugin {
                 }
                 if (appendUserAgent != null) {
                     settings.setUserAgentString(settings.getUserAgentString() + " " + appendUserAgent);
+                }
+                if(features.get(USERAGENT)!=null) {
+                    try {
+                        overrideUserAgent = URLDecoder.decode(features.get(USERAGENT),"UTF-8");  
+                    } catch (UnsupportedEncodingException e) {  
+                        LOG.d(LOG_TAG, USERAGENT+": "+features.get(USERAGENT)+", read error："+e.getMessage());  
+                    }
                 }
 
                 //Toggle whether this is enabled or not!
