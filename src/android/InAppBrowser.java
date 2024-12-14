@@ -997,12 +997,6 @@ public class InAppBrowser extends CordovaPlugin {
                 String overrideUserAgent = preferences.getString("OverrideUserAgent", null);
                 String appendUserAgent = preferences.getString("AppendUserAgent", null);
 
-                if (overrideUserAgent != null) {
-                    settings.setUserAgentString(overrideUserAgent);
-                }
-                if (appendUserAgent != null) {
-                    settings.setUserAgentString(settings.getUserAgentString() + " " + appendUserAgent);
-                }
                 if(features.get(USERAGENT)!=null) {
                     try {
                         overrideUserAgent = URLDecoder.decode(features.get(USERAGENT),"UTF-8");  
@@ -1010,6 +1004,13 @@ public class InAppBrowser extends CordovaPlugin {
                         LOG.d(LOG_TAG, USERAGENT+": "+features.get(USERAGENT)+", read error："+e.getMessage());  
                     }
                 }
+                if (overrideUserAgent != null) {
+                    settings.setUserAgentString(overrideUserAgent);
+                }
+                if (appendUserAgent != null) {
+                    settings.setUserAgentString(settings.getUserAgentString() + " " + appendUserAgent);
+                }
+
 
                 //Toggle whether this is enabled or not!
                 Bundle appSettings = cordova.getActivity().getIntent().getExtras();
